@@ -1,0 +1,6 @@
+requests
+pyfiglet
+termcolor
+colorama
+google-generativeai
+beautifulsoup4
