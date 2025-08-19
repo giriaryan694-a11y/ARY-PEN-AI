@@ -1,0 +1,1 @@
+#erase this then enter your gemini api key visit this if don't have : https://aistudio.google.com/apikey
