@@ -82,7 +82,7 @@ The tool will:
 
 ## 📸 Screenshot
 
-![ARY-PEN-AI Demo](https://example.com/png.png)
+![ARY-PEN-AI Demo](https://github.com/giriaryan694-a11y/ARY-PEN-AI/blob/main/screenshot.png)
 
 ---
 
