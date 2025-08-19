@@ -34,7 +34,7 @@ All findings are accompanied by actionable recommendations and proof-of-concept 
 
 1. Clone this repository:
    ```bash
-   git clone https://github.com/YourUsername/ARY-PEN-AI.git
+   git clone https://github.com/giriaryan694-a11y/ARY-PEN-AI.git
    cd ARY-PEN-AI
    ```
 
@@ -62,7 +62,7 @@ To use ARY-PEN-AI, you need a Google Gemini API key:
 Run the script and provide the target URL:
 
 ```bash
-python ary_pen_ai.py
+python main.py
 ```
 
 Example:
