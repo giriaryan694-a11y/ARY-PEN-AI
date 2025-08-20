@@ -1,3 +1,10 @@
+#########################################
+# Author: Aryan
+# Copyright: 2025 Aryan
+# GitHub: https://github.com/giriaryan694-a11y
+# Note: Unauthorized copying without credit is prohibited
+#########################################
+
 import os
 import re
 import requests
