@@ -42,11 +42,15 @@ model = genai.GenerativeModel('gemini-2.0-flash')
 def clean_url(url):
     return url.strip().rstrip(")/")
 
-def fetch_url(url):
+def fetch_url(url, cookies=None):
+    headers = {}
+    if cookies:
+        headers['Cookie'] = cookies
     try:
-        res = requests.get(url, timeout=10)
+        res = requests.get(url, headers=headers, timeout=10)
         return res.text if res.status_code == 200 else None
-    except:
+    except Exception as e:
+        print(Fore.RED + f"[!] Error fetching {url}: {e}")
         return None
 
 def analyze_html_with_gemini(html_code, page_url):
@@ -81,24 +85,24 @@ def extract_internal_files(base_url, html):
             else:
                 full_url = urljoin(base_url, '/' + href)
 
-            if any(full_url.endswith(ext) for ext in ['.php', '.js', '.html', '.txt', '/']):
+            if any(full_url.endswith(ext) for ext in ['.php', '.js', '.html', '.txt', '/', '.env']):
                 found.add(full_url)
 
     return list(found)
 
-def scan_site(url):
+def scan_site(url, cookies=None):
     url = clean_url(url)
     print(Fore.BLUE + f"\n=== Scanning: {url} ===\n")
 
     # Step 1: robots.txt
-    robots = fetch_url(urljoin(url, "/robots.txt"))
+    robots = fetch_url(urljoin(url, "/robots.txt"), cookies)
     if robots:
         print(Fore.GREEN + "[+] robots.txt found:\n", robots)
     else:
         print(Fore.GREEN + "[-] robots.txt not found.")
 
     # Step 2: sitemap.xml
-    sitemap = fetch_url(urljoin(url, "/sitemap.xml"))
+    sitemap = fetch_url(urljoin(url, "/sitemap.xml"), cookies)
     sitemap_urls = []
     if sitemap:
         print(Fore.GREEN + "[+] Sitemap found. Parsing...")
@@ -114,7 +118,7 @@ def scan_site(url):
     all_targets = set(sitemap_urls)
 
     print(Fore.GREEN + "[*] Extracting internal files from homepage...")
-    homepage = fetch_url(url)
+    homepage = fetch_url(url, cookies)
     if homepage:
         links = extract_internal_files(url, homepage)
         all_targets.update(links)
@@ -122,7 +126,7 @@ def scan_site(url):
     # Step 3: Analyze each file
     for target in sorted(all_targets):
         print(Fore.BLUE + f"\n[+] Analyzing: {target}")
-        html = fetch_url(target)
+        html = fetch_url(target, cookies)
         if html:
             result = analyze_html_with_gemini(html, target)
             print(Fore.GREEN + "[*] Vulnerability Report:\n", result)
@@ -132,4 +136,8 @@ def scan_site(url):
 # === MAIN ===
 if __name__ == "__main__":
     target = input(Fore.GREEN + "Enter target URL (e.g., http://testphp.vulnweb.com/): ")
-    scan_site(target)
+    print(Fore.YELLOW + "Example cookie input format: name=value; name2=value2")
+    cookie_input = input(Fore.GREEN + "Enter cookies (press Enter for none): ").strip()
+    cookies = cookie_input if cookie_input else None
+
+    scan_site(target, cookies)
