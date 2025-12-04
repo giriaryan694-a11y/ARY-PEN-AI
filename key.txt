@@ -1,1 +1,4 @@
-#erase this then enter your gemini api key visit this if don't have : https://aistudio.google.com/apikey
+#erase this then enter your gemini & openai api key visit this if don't have : https://aistudio.google.com/apikey & https://platform.openai.com/api-keys
+
+GEMINI_API=AIzaSyYourGeminiKeyHere12345
+CHATGPT_API=sk-proj-YourOpenAIKeyHere12345
