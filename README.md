@@ -139,7 +139,8 @@ developer.mozilla.org
 
 ## 📸 Screenshots
 
-(Add screenshots of terminal output or UI here.)
+<img src = "screenshots/screenshot1.png">
+<img src = "screenshots/screenshot2.png">
 
 ---
 
